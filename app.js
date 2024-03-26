@@ -1,40 +1,35 @@
-let tasks = [];
-
-function addTask() {
-  const taskInput = document.getElementById("taskInput");
-  const taskText = taskInput.value.trim();
-  if (taskText !== "") {
-    tasks.push(taskText);
-    renderTasks();
-    taskInput.value = "";
+function renderTodo() {
+  ol.innerHTML = ''
+  for (let i = 0; i < arr.length; i++) {
+      ol.innerHTML += `
+      <li> ${arr[i]}
+      <button onclick="deleteTodo(${i})">delete</button>
+      <button onclick="editTodo(${i})">edit</button>
+      </li>
+      `
   }
 }
 
-function renderTasks() {
-  const taskList = document.getElementById("taskList");
-  taskList.innerHTML = "";
-  tasks.forEach((task, index) => {
-    const listItem = document.createElement("li");
-    listItem.innerHTML = `
-      <span>${task}</span>
-      <button onclick="editTask(${index})">Edit</button>
-      <button onclick="deleteTask(${index})">Delete</button>
-    `;
-    taskList.appendChild(listItem);
-  });
+
+const todoInput = document.querySelector('#todo');
+const ol = document.querySelector('ol');
+
+const arr = [];
+
+function addTodo() {
+  arr.push(todoInput.value);
+  renderTodo()
+  todoInput.value = ''
 }
 
-function deleteTask(index) {
-  tasks.splice(index, 1);
-  renderTasks();
+
+function deleteTodo(index) {
+  arr.splice(index, 1);
+  renderTodo()
 }
 
-function editTask(index) {
-  const newTaskText = prompt("Edit task:", tasks[index]);
-  if (newTaskText !== null) {
-    tasks[index] = newTaskText.trim();
-    renderTasks();
-  }
+function editTodo(index) {
+  const updatedVal = prompt('enter updated value');
+  arr.splice(index , 1 , updatedVal);
+  renderTodo()
 }
-
-renderTasks();
